@@ -1,0 +1,18 @@
+spring:
+  flyway:
+    enabled: true
+    baseline-on-migrate : true
+  application:
+    name: ms-user-service
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+#      This config will override the flyway because it will drop the user schema flyway
+#      ddl-auto: create-drop
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/ms_user_service
+    username: ms_user_service
+    password: ms_user_service
+    driverClassName: org.postgresql.Driver
