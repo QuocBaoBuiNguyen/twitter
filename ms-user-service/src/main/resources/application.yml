@@ -13,6 +13,6 @@ spring:
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/ms_user_service
-    username: ms_user_service
-    password: ms_user_service
+    username: postgres
+    password: root
     driverClassName: org.postgresql.Driver
