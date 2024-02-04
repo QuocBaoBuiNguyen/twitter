@@ -49,6 +49,8 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	implementation project(':lib')
+
 	implementation 'org.flywaydb:flyway-core:10.6.0'
 	implementation 'org.flywaydb:flyway-database-postgresql:10.6.0'
 

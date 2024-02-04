@@ -1,0 +1,5 @@
+.gradle/
+lib/build/
+build/
+.idea/
+
