@@ -1,5 +1,6 @@
 package com.twitter.ms.controller;
 
+import com.gmail.merikbest2015.dto.CommonResponse;
 import com.twitter.ms.constants.ApiConstants;
 import com.twitter.ms.dto.request.AuthRequest;
 import com.twitter.ms.dto.request.RegistrationEmailCodeProcessRequest;
@@ -32,17 +33,16 @@ public class AuthController {
     public ResponseEntity<RegistrationResponse> registerValidateController(
             @RequestHeader HttpHeaders headers,
            @RequestBody RegistrationRequest userRegisterRequest) {
-
         RegistrationResponse response = registrationService.registrationValidateService(userRegisterRequest);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(path="/register/code")
-    public ResponseEntity<RegistrationResponse> sendRegistrationCode(
+    public ResponseEntity<CommonResponse> sendRegistrationCode(
             @RequestHeader HttpHeaders headers,
             @RequestBody RegistrationEmailCodeProcessRequest registrationEmailCodeProcessRequest) {
-        registrationService.sendRegistrationCode(registrationEmailCodeProcessRequest.getEmail());
-        return new ResponseEntity<>(HttpStatus.OK);
+        CommonResponse commonResponse = registrationService.sendRegistrationCode(registrationEmailCodeProcessRequest.getEmail());
+        return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 
 }

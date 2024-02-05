@@ -1,5 +1,8 @@
 package com.twitter.ms.service;
 
+import com.gmail.merikbest2015.dto.CommonResponse;
+import com.gmail.merikbest2015.dto.request.EmailRequest;
+import com.twitter.ms.config.AmqpProducer;
 import com.twitter.ms.dto.request.RegistrationRequest;
 import com.twitter.ms.dto.response.RegistrationResponse;
 import com.twitter.ms.exception.RegistrationException;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,6 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegistrationService {
     private final UserRepository userRepository;
+    private final AmqpProducer amqpProducer;
 
     @Transactional
     public RegistrationResponse registrationValidateService(RegistrationRequest request) {
@@ -46,12 +51,26 @@ public class RegistrationService {
         throw new RegistrationException("Email", "Email is already registered", HttpStatus.FORBIDDEN);
     }
 
-    public void sendRegistrationCode(String email) {
+    @Transactional
+    public CommonResponse sendRegistrationCode(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RegistrationException("Email", "Email is already registered", HttpStatus.FORBIDDEN));
         userRepository.updateActivationCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
         String activationCode = userRepository.findActivationCodeByUserId(user.getId());
-
+        EmailRequest emailRequest = EmailRequest.builder()
+                .to(user.getEmail())
+                .subject("Validation code for Twitter registration")
+                .template("Template")
+                .attributes(Map.of(
+                        "fullName", user.getFullName(),
+                        "registrationCode", activationCode
+                ))
+                .build();
+        amqpProducer.sendEmail(emailRequest);
+        return CommonResponse.builder()
+                .httpStatus("200 OK")
+                .message("Send activation code successfully")
+                .build();
     }
 
 }
