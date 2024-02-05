@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class AmqpProducer {
-    private String rabbitMqHost = "localhost:5672";
     @Value("${rabbitmq.internal-mail.exchanges}")
     private String exchange;
     @Value("${rabbitmq.internal-mail.routing-keys}")
