@@ -30,7 +30,6 @@ public class TestConstants {
     public static final Long PHONE = 666966623L;
     public static final String COUNTRY = "UA";
     public static final String GENDER = "Cat";
-    public static final String LANGUAGE = "Ukrainian - українська";
     public static final String BACKGROUND_COLOR = "DEFAULT";
     public static final String COLOR_SCHEME = "BLUE";
     public static final Long PINNED_TWEET_ID = 40L;

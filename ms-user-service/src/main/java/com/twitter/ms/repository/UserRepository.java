@@ -13,10 +13,18 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
-    @Query("SELECT u.activationCode FROM Users u WHERE u.id = :userId")
+    @Query("SELECT u.activationCode FROM User u WHERE u.id = :userId")
     String findActivationCodeByUserId(@Param("userId") Long userId);
 
     @Modifying
-    @Query("UPDATE Users user SET user.activationCode = :activationCode WHERE user.id = :userId")
-    void updateActivationCode(@Param("activationCode") String activationCode,@Param("userId") Long userId);
+    @Query("UPDATE User user SET user.activationCode = :activationCode WHERE user.id = :userId")
+    void updateActivationCode(@Param("activationCode") String activationCode, @Param("userId") Long userId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.active = :active WHERE user.id = :userId")
+    void updateAccountStatus(@Param("active") Boolean active, @Param("userId") Long userId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.password = :password WHERE user.id = :userId")
+    void updatePassword(@Param("password") String password, @Param("userId") Long userId);
 }

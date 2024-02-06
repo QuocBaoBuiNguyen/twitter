@@ -1,11 +1,14 @@
 package com.twitter.ms.controller;
 
+import com.gmail.merikbest2015.dto.CommonResponse;
 import com.twitter.ms.constants.ApiConstants;
 import com.twitter.ms.dto.request.AuthRequest;
+import com.twitter.ms.dto.request.PasswordRegistrationRequest;
 import com.twitter.ms.dto.request.RegistrationEmailCodeProcessRequest;
 import com.twitter.ms.dto.request.RegistrationRequest;
 import com.twitter.ms.dto.response.AuthResponse;
 import com.twitter.ms.dto.response.RegistrationResponse;
+import com.twitter.ms.service.AuthService;
 import com.twitter.ms.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -19,30 +22,46 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final RegistrationService registrationService;
+    private final AuthService authService;
 
     @PostMapping(path = "/login")
     public ResponseEntity<AuthResponse> loginController(
              @RequestHeader HttpHeaders headers,
              @RequestBody AuthRequest authRequest) {
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        AuthResponse authResponse = authService.login(authRequest);
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 
     @PostMapping(path="/register/check")
     public ResponseEntity<RegistrationResponse> registerValidateController(
             @RequestHeader HttpHeaders headers,
            @RequestBody RegistrationRequest userRegisterRequest) {
-
         RegistrationResponse response = registrationService.registrationValidateService(userRegisterRequest);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping(path="/register/code")
-    public ResponseEntity<RegistrationResponse> sendRegistrationCode(
+    @PostMapping(path="/register/activation-code")
+    public ResponseEntity<CommonResponse> sendRegistrationCodeController(
             @RequestHeader HttpHeaders headers,
             @RequestBody RegistrationEmailCodeProcessRequest registrationEmailCodeProcessRequest) {
-        registrationService.sendRegistrationCode(registrationEmailCodeProcessRequest.getEmail());
-        return new ResponseEntity<>(HttpStatus.OK);
+        CommonResponse commonResponse = registrationService.sendRegistrationCode(registrationEmailCodeProcessRequest.getEmail());
+        return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 
+    @PostMapping(path = "/register/email/{email}/activation-code/{code}")
+    public ResponseEntity<CommonResponse> validatedActivationCodeController(
+        @RequestHeader HttpHeaders headers,
+        @PathVariable(name = "email") String email,
+        @PathVariable(name = "code") String code) {
+        CommonResponse commonResponse = registrationService.validatedActivationCode(email, code);
+        return new ResponseEntity<>(commonResponse, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/register/confirm")
+    public ResponseEntity<AuthResponse> passwordConfirmationController(
+            @RequestHeader HttpHeaders headers,
+            @RequestBody PasswordRegistrationRequest request) {
+        AuthResponse authResponse = registrationService.passwordConfirmation(request);
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
+    }
 }
