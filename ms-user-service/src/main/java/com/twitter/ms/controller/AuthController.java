@@ -37,11 +37,20 @@ public class AuthController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping(path="/register/code")
+    @PostMapping(path="/register/activation-code")
     public ResponseEntity<CommonResponse> sendRegistrationCode(
             @RequestHeader HttpHeaders headers,
             @RequestBody RegistrationEmailCodeProcessRequest registrationEmailCodeProcessRequest) {
         CommonResponse commonResponse = registrationService.sendRegistrationCode(registrationEmailCodeProcessRequest.getEmail());
+        return new ResponseEntity<>(commonResponse, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "register/email/{email}/activation-code/{code}")
+    public ResponseEntity<CommonResponse> validatedActivationCode(
+        @RequestHeader HttpHeaders headers,
+        @PathVariable(name = "email") String email,
+        @PathVariable(name = "code") String code) {
+        CommonResponse commonResponse = registrationService.validatedActivationCode(email, code);
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 

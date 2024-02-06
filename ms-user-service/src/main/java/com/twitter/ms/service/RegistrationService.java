@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,6 +25,7 @@ import java.util.UUID;
 public class RegistrationService {
     private final UserRepository userRepository;
     private final AmqpProducer amqpProducer;
+    private final OtpService otpService;
 
     @Transactional
     public RegistrationResponse registrationValidateService(RegistrationRequest request) {
@@ -55,7 +57,7 @@ public class RegistrationService {
     public CommonResponse sendRegistrationCode(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RegistrationException("Email", "Email is already registered", HttpStatus.FORBIDDEN));
-        userRepository.updateActivationCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
+        userRepository.updateActivationCode(otpService.generateOtp(user.getEmail()), user.getId());
         String activationCode = userRepository.findActivationCodeByUserId(user.getId());
         EmailRequest emailRequest = EmailRequest.builder()
                 .to(user.getEmail())
@@ -72,5 +74,20 @@ public class RegistrationService {
                 .message("Send activation code successfully")
                 .build();
     }
+    
+    @Transactional
+    public CommonResponse validatedActivationCode(String email, String activationCode) {
+        Optional<String> otpOptional = otpService.getOtp(email);
+        String otp = otpOptional.orElseThrow(() -> new RegistrationException("Activation code", "Activation code not found/or passed TTL", HttpStatus.FORBIDDEN));
+        if (!otp.equals(activationCode)) {
+            throw new RegistrationException("Activation code", "Activation code invalid", HttpStatus.FORBIDDEN);
+        }
+        otpService.deleteOtp(email);
+        return CommonResponse.builder()
+                .httpStatus("200 OK")
+                .message("Activated account successfully")
+                .build();
+    }
+
 
 }

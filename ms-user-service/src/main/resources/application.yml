@@ -16,6 +16,14 @@ spring:
     username: postgres
     password: root
     driverClassName: org.postgresql.Driver
+  data:
+    redis:
+      host: localhost
+      user:
+      password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      port: '6379'
+      database: '0'
+      timeout: '60000'
 
 rabbitmq:
   internal-mail:
