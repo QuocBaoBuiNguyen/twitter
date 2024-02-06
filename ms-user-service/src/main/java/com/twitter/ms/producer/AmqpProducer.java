@@ -1,4 +1,4 @@
-package com.twitter.ms.config;
+package com.twitter.ms.producer;
 
 import com.gmail.merikbest2015.dto.request.EmailRequest;
 import lombok.RequiredArgsConstructor;

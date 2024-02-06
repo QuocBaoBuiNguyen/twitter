@@ -29,3 +29,6 @@ rabbitmq:
   internal-mail:
     exchanges: internal.exchange
     routing-keys: internal.mail.routing-key
+
+jwt:
+  secret: 208bc47b3e1ee5554e388c735b9f234f89ac246e8ce463c8313fc1cff16e760e

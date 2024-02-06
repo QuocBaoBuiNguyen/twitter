@@ -1,5 +1,16 @@
 package com.twitter.ms.dto.response;
 
-public class AuthResponse {
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
+@Builder
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class AuthResponse {
+    private AuthUserResponse authUserResponse;
+    private String accessToken;
 }
