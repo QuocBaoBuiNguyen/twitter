@@ -1,5 +1,5 @@
-export const HOST = "http://localhost:8080";
-export const API_ENDPOINT = HOST + "/api-gateway/ms-user-service/v1";
+export const HOST = "http://localhost:8000";
+export const API_ENDPOINT = HOST + "/ui/v1";
 export const WS_URL = HOST + "/websocket";
 
 // AuthApi
