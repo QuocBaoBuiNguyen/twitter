@@ -1,5 +1,5 @@
 server:
-  port : 8081
+  port : 8082
 rabbitmq:
   internal-mail:
     exchanges: internal.exchange
@@ -8,6 +8,8 @@ rabbitmq:
     routing-key: internal.mail.routing-key
 
 spring:
+  application:
+    name: ms-email-service
   mail:
     host: smtp.gmail.com
     username: walkerelot16@gmail.com
@@ -19,3 +21,12 @@ spring:
           starttls:
             enable: 'true'
           auth: 'true'
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    hostname: ${EUREKA_HOST:localhost}

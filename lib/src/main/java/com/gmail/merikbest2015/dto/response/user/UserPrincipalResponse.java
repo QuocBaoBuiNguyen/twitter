@@ -6,5 +6,5 @@ import lombok.Data;
 public class UserPrincipalResponse {
     private Long id;
     private String email;
-    private String activationCode;
+    private Boolean active;
 }
