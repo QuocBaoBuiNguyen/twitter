@@ -1,4 +1,4 @@
-package com.twitter.ms.controller;
+package com.twitter.ms.controller.rest;
 
 import com.gmail.merikbest2015.dto.CommonResponse;
 import com.twitter.ms.constants.ApiConstants;

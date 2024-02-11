@@ -1,5 +1,6 @@
 package com.twitter.gateway.config;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -12,9 +13,10 @@ import static com.gmail.merikbest2015.constants.PathConstants.API_V1_AUTH;
 @Configuration
 public class ClientConfig {
         @Bean
+        @LoadBalanced
         public WebClient webClient() {
             return WebClient.builder()
-                    .baseUrl(String.format("http://%s:8081%s", USER_SERVICE, API_V1_AUTH))
+                    .baseUrl(String.format("http://%s:8081/%s", "localhost", USER_SERVICE + API_V1_AUTH))
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .build();
         }

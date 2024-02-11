@@ -19,13 +19,13 @@ public class GlobalExceptionHandler {
                         .build(),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<CommonResponse> exceptionHandler(Exception exception) {
-        return new ResponseEntity<>(
-                CommonResponse.builder()
-                .message(exception.getMessage())
-                .httpStatus("500 Internal server error")
-                .build(),
-                HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(value = {Exception.class})
+//    public ResponseEntity<CommonResponse> exceptionHandler(Exception exception) {
+//        return new ResponseEntity<>(
+//                CommonResponse.builder()
+//                .message(exception.getMessage())
+//                .httpStatus("500 Internal server error")
+//                .build(),
+//                HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 }

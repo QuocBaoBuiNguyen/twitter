@@ -100,8 +100,8 @@ public class RegistrationService {
         userRepository.updateAccountStatus(true, user.getId());
         String accessToken = jwtProvider.createToken(user.getEmail(), "USER");
         return AuthResponse.builder()
-                .authUserResponse(UserMapper.INSTANCE.userEntityToAuthUserDTO(user))
-                .accessToken(accessToken)
+                .user(UserMapper.INSTANCE.userEntityToAuthUserDTO(user))
+                .token(accessToken)
                 .build();
     }
 
