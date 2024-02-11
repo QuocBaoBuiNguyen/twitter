@@ -1,6 +1,7 @@
 package com.twitter.ms.repository;
 
 import com.twitter.ms.model.User;
+import com.twitter.ms.repository.projection.UserProfileView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +13,10 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
+
+    <T> Optional<T> getUserByEmail(String email, Class<T> projections);
+
+    Optional<UserProfileView> getUserProfileById(Long id);
 
     @Query("SELECT u.activationCode FROM User u WHERE u.id = :userId")
     String findActivationCodeByUserId(@Param("userId") Long userId);

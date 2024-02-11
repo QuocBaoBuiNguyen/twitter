@@ -34,8 +34,11 @@ spring:
               - Path=/ui/v1/user/**, /api/v1/user/**, /api/v1/auth/**
             filters:
               - name: AuthFilter
+              - RewritePath=/ui/v1/user/(?<segment>.*), /ms-user-service/ui/v1/user/$\{segment}
+              - RewritePath=/api/v1/auth/(?<segment>.*), /ms-user-service/api/v1/auth/$\{segment}
+              - RewritePath=/api/v1/user/(?<segment>.*), /ms-user-service/api/v1/user/$\{segment}
 
-#        Do not apply filter for this route
+        #        Do not apply filter for this route
         -   id: ms-user-service-auth
             uri: lb://ms-user-service
             predicates:
@@ -59,3 +62,6 @@ eureka:
     register-with-eureka: true
   instance:
     hostname: ${EUREKA_HOST:localhost}
+
+jwt:
+  secret: 208bc47b3e1ee5554e388c735b9f234f89ac246e8ce463c8313fc1cff16e760e

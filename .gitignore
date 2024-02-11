@@ -2,4 +2,5 @@
 lib/build/
 build/
 .idea
-
+.vscode
+./frontend/.vscode
