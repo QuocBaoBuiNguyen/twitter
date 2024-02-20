@@ -24,4 +24,14 @@ public class AuthUtil {
             return Long.parseLong(userId);
         }
     }
+
+    public static Long getAuthenticatedUserId(HttpServletRequest request) {
+        String userId = request.getHeader(AUTH_USER_ID_HEADER);
+
+        if (userId == null) {
+            throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+        } else {
+            return Long.parseLong(userId);
+        }
+    }
 }

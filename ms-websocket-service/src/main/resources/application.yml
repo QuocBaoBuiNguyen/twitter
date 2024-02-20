@@ -1,0 +1,19 @@
+server:
+  port : 8084
+  servlet:
+    context-path: /ms-websocket-service
+
+spring:
+  application:
+    name: ms-websocket-service
+  cloud:
+    compatibility-verifier:
+      enabled: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    hostname: ${EUREKA_HOST:localhost}
