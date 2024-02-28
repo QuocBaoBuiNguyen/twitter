@@ -1,7 +1,6 @@
 package com.twitter.ms.controller.rest;
 
 import com.gmail.merikbest2015.dto.CommonResponse;
-import com.twitter.ms.constants.ApiConstants;
 import com.twitter.ms.dto.request.AuthRequest;
 import com.twitter.ms.dto.request.PasswordRegistrationRequest;
 import com.twitter.ms.dto.request.RegistrationEmailCodeProcessRequest;
@@ -16,15 +15,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.gmail.merikbest2015.constants.PathConstants.LOGIN;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = ApiConstants.APPLICATION_PREFIX + "/auth")
+@RequestMapping(value = UI_V1 + "/auth")
 public class AuthController {
 
     private final RegistrationService registrationService;
     private final AuthService authService;
 
-    @PostMapping(path = "/login")
+    @PostMapping(path = LOGIN)
     public ResponseEntity<AuthResponse> loginController(
              @RequestHeader HttpHeaders headers,
              @RequestBody AuthRequest authRequest) {

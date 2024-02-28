@@ -46,10 +46,28 @@ spring:
             filters:
               - RewritePath=/ui/v1/auth/(?<segment>.*), /ms-user-service/ui/v1/auth/$\{segment}
 
-        -   id: email-service
-            uri: lb://email-service
+        -   id: ms-tweet-service
+            uri: lb://ms-tweet-service
+            predicates:
+              - Path=/ui/v1/tweets/**
+            filters:
+              - name: AuthFilter
+              - RewritePath=/ui/v1/tweets(?<segment>/?.*), /ms-tweet-service/ui/v1/tweets$\{segment}
+
+        -   id: ms-email-service
+            uri: lb://ms-email-service
             predicates:
               - Path=/api/v1/email/suggested
+            filters:
+              - RewritePath=/api/v1/email/suggested/(?<segment>.*), /ms-email-service/api/v1/email/suggested/$\{segment}
+
+        -   id: ms-websocket-service
+            uri: lb://ms-websocket-service
+            predicates:
+              - Path=/websocket/**, /api/v1/websocket/**
+            filters:
+              - RewritePath=/websocket/(?<segment>.*), /ms-websocket-service/websocket/$\{segment}
+              - RewritePath=/api/v1/websocket(?<segment>/?.*), /ms-websocket-service/api/v1/websocket$\{segment}
 
 #  zipkin:
 #    base-url: http://${ZIPKIN_HOST:localhost}:9411

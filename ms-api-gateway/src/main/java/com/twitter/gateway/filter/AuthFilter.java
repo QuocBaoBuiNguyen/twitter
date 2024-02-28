@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -24,13 +25,12 @@ public class AuthFilter extends
     final Logger logger =
             LoggerFactory.getLogger(AuthFilter.class);
     private final JwtProvider jwtProvider;
-    private final WebClient client;
-
+    private final WebClient.Builder webClientBuilder;
     @Autowired
-    public AuthFilter(JwtProvider jwtProvider, WebClient client) {
+    public AuthFilter(JwtProvider jwtProvider, WebClient.Builder clientBuilder) {
         super(Config.class);
         this.jwtProvider = jwtProvider;
-        this.client = client;
+        this.webClientBuilder = clientBuilder;
     }
 
     @Override
@@ -41,7 +41,11 @@ public class AuthFilter extends
 
             if (!token.isEmpty() && isValid) {
                 String email = jwtProvider.parseToken(token);
-                UserPrincipalResponse user = client.get()
+
+                UserPrincipalResponse user = webClientBuilder
+                        .baseUrl(String.format("http://%s:8081/%s", USER_SERVICE, USER_SERVICE + API_V1_AUTH))
+                        .build()
+                        .get()
                         .uri(USER_EMAIL, email)
                         .retrieve()
                         .bodyToMono(UserPrincipalResponse.class)

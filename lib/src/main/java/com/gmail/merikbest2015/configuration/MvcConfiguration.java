@@ -20,12 +20,12 @@ public class MvcConfiguration implements WebMvcConfigurer {
         return new RestTemplate();
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/ui/v1/**")
-                .allowedOrigins(hostname)
-                .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
-                .exposedHeaders("page-total-count")
-                .allowedHeaders("*");
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/ui/v1/**")
+//                .allowedOrigins(hostname)
+//                .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
+//                .exposedHeaders("page-total-count")
+//                .allowedHeaders("*");
+//    }
 }

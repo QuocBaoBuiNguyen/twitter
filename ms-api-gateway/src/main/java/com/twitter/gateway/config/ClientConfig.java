@@ -12,12 +12,9 @@ import static com.gmail.merikbest2015.constants.PathConstants.API_V1_AUTH;
 
 @Configuration
 public class ClientConfig {
-        @Bean
-        @LoadBalanced
-        public WebClient webClient() {
-            return WebClient.builder()
-                    .baseUrl(String.format("http://%s:8081/%s", "localhost", USER_SERVICE + API_V1_AUTH))
-                    .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .build();
-        }
+    @LoadBalanced
+    @Bean
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder();
+    }
 }
