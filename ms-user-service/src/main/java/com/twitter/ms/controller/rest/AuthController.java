@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.gmail.merikbest2015.constants.PathConstants.LOGIN;
 import static com.gmail.merikbest2015.constants.PathConstants.UI_V1;
 
 @RestController
@@ -25,7 +26,7 @@ public class AuthController {
     private final RegistrationService registrationService;
     private final AuthService authService;
 
-    @PostMapping(path = "/login")
+    @PostMapping(path = LOGIN)
     public ResponseEntity<AuthResponse> loginController(
              @RequestHeader HttpHeaders headers,
              @RequestBody AuthRequest authRequest) {

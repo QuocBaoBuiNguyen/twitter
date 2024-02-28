@@ -35,4 +35,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.dateTime DESC")
     List<ProfileTweetImageProjection> getUserTweetImages(@Param("userId") Long userId, Pageable pageable);
 
+    @Query("SELECT tagged " +
+            "FROM Tweet tweet " +
+            "LEFT JOIN tweet.taggedImageUsers tagged " +
+            "WHERE tweet.id = :tweetId")
+    List<Long> getTaggedImageUserIds(@Param("tweetId") Long tweetId);
 }

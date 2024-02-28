@@ -13,6 +13,6 @@ import static com.gmail.merikbest2015.constants.PathConstants.API_V1_WEBSOCKET;
 @CircuitBreaker(name = WEBSOCKET_SERVICE)
 @FeignClient(name = WEBSOCKET_SERVICE, configuration = FeignConfiguration.class)
 public interface WebSocketClient {
-    @PostMapping(API_V1_WEBSOCKET)
+    @PostMapping("/" + WEBSOCKET_SERVICE + API_V1_WEBSOCKET)
     void send(@RequestParam("destination") String destination, @RequestBody Object request);
 }

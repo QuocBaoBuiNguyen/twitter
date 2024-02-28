@@ -13,18 +13,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = UI_V1)
+@RequestMapping(value = UI_V1 + USER)
 public class UserController {
 
     private final UserService userService;
     private final AuthService authService;
 
-    @GetMapping("/user/{userId}")
+    @GetMapping(START)
+    public ResponseEntity<Boolean> startUseTwitter() {
+        userService.startUseTwitter();
+        return ResponseEntity.ok(true);
+    }
+
+    @GetMapping("/{userId}")
     public ResponseEntity<UserProfileResponse> getUserByUserId (
             @RequestHeader @Valid HttpHeaders headers,
             @PathVariable(name = "userId") Long userId

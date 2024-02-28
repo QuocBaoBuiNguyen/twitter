@@ -33,7 +33,7 @@ public class TweetController {
             @PathVariable("userId") Long userId,
             @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetUserResponse> response = tweetService.getUserTweets(userId, pageable);
-        return new ResponseEntity<>(response.getItems(), HttpStatus.OK);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping(IMAGES_USER_ID)

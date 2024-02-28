@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "poll")
+@Table(name = "polls")
 public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "polls_seq")

@@ -79,7 +79,7 @@ public class TweetServiceHelper {
 
         parseUserMentionFromTextAndNotifyUser(tweetResponse);
 //        tagClient.parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
-        notificationClient.sendTweetNotificationToSubscribers(tweet.getId());
+//        notificationClient.sendTweetNotificationToSubscribers(tweet.getId());
         return tweetResponse;
     }
 
