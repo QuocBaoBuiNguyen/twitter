@@ -12,6 +12,11 @@ export interface RegistrationRequest {
     birthday: string;
 }
 
+export interface EmailVerificationRequest {
+    email: string;
+    verificationCode: string;
+}
+
 export interface LoginRequest {
     email: string;
     password: string;

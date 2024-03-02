@@ -29,7 +29,7 @@ public class UserController {
         return ResponseEntity.ok(true);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping(USER_ID)
     public ResponseEntity<UserProfileResponse> getUserByUserId (
             @RequestHeader @Valid HttpHeaders headers,
             @PathVariable(name = "userId") Long userId

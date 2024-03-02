@@ -15,8 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gmail.merikbest2015.constants.PathConstants.LOGIN;
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,7 +33,7 @@ public class AuthController {
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 
-    @PostMapping(path="/register/check")
+    @PostMapping(path=REGISTRATION_CHECK)
     public ResponseEntity<RegistrationResponse> registerValidateController(
             @RequestHeader HttpHeaders headers,
            @RequestBody RegistrationRequest userRegisterRequest) {
@@ -42,7 +41,7 @@ public class AuthController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping(path="/register/activation-code")
+    @PostMapping(path=REGISTRATION_CODE)
     public ResponseEntity<CommonResponse> sendRegistrationCodeController(
             @RequestHeader HttpHeaders headers,
             @RequestBody RegistrationEmailCodeProcessRequest registrationEmailCodeProcessRequest) {
@@ -50,7 +49,7 @@ public class AuthController {
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/register/email/{email}/activation-code/{code}")
+    @GetMapping(path = REGISTRATION_ACTIVATE_CODE)
     public ResponseEntity<CommonResponse> validatedActivationCodeController(
         @RequestHeader HttpHeaders headers,
         @PathVariable(name = "email") String email,
@@ -59,7 +58,7 @@ public class AuthController {
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/register/confirm")
+    @PostMapping(path = REGISTRATION_CONFIRM)
     public ResponseEntity<AuthResponse> passwordConfirmationController(
             @RequestHeader HttpHeaders headers,
             @RequestBody PasswordRegistrationRequest request) {

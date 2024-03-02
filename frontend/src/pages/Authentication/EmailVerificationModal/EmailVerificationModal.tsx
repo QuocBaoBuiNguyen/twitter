@@ -2,6 +2,8 @@ import React, { ChangeEvent, FC, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as MuiLink, Typography } from "@material-ui/core";
 
+import { EmailVerificationRequest } from "../../../types/auth";
+
 import { useEmailVerificationModalStyles } from "./EmailVerificationModalStyles";
 import { RegistrationInputField } from "../RegistrationInput/RegistrationInputField";
 import DialogWrapper from "../DialogWrapper/DialogWrapper";
@@ -21,7 +23,11 @@ const EmailVerificationModal: FC = (): ReactElement => {
     const [verificationCode, setVerificationCode] = useState<string>("");
 
     const checkEmailVerificationCode = (): void => {
-        dispatch(fetchCheckRegistrationCode(verificationCode));
+        var request: EmailVerificationRequest  = {
+            email: registrationInfo.email,
+            verificationCode: verificationCode,
+        };
+        dispatch(fetchCheckRegistrationCode(request));
     };
 
     const onChangeVerificationCode = (event: ChangeEvent<HTMLInputElement>): void => {
