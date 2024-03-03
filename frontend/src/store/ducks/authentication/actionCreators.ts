@@ -10,7 +10,7 @@ import {
     SetRegistrationInfoActionInterface,
     SetRegistrationStepActionInterface
 } from "./constants/actionTypes";
-import { RegistrationRequest, RegistrationStep } from "../../../types/auth";
+import { RegistrationRequest, RegistrationStep, EmailVerificationRequest } from "../../../types/auth";
 import { LoadingStatus } from "../../../types/common";
 import { RegistrationPayload } from "./constants/state";
 
@@ -39,7 +39,7 @@ export const fetchSendRegistrationCode = (payload: RegistrationRequest): FetchSe
     payload
 });
 
-export const fetchCheckRegistrationCode = (payload: string): FetchCheckRegistrationCodeActionInterface => ({
+export const fetchCheckRegistrationCode = (payload: EmailVerificationRequest): FetchCheckRegistrationCodeActionInterface => ({
     type: AuthenticationTypes.FETCH_CHECK_REGISTRATION_CODE,
     payload
 });

@@ -1,6 +1,6 @@
 import { Action } from "redux";
 
-import { RegistrationRequest, RegistrationStep } from "../../../../types/auth";
+import { RegistrationRequest, RegistrationStep, EmailVerificationRequest } from "../../../../types/auth";
 import { LoadingStatus } from "../../../../types/common";
 import { RegistrationPayload } from "./state";
 
@@ -43,7 +43,7 @@ export interface FetchSendRegistrationCodeActionInterface extends Action<Authent
 
 export interface FetchCheckRegistrationCodeActionInterface extends Action<AuthenticationTypes> {
     type: AuthenticationTypes.FETCH_CHECK_REGISTRATION_CODE;
-    payload: string;
+    payload: EmailVerificationRequest;
 }
 
 export interface SetOpenModalActionInterface extends Action<AuthenticationTypes> {
