@@ -1,5 +1,9 @@
 package com.twitter.ms.controller.rest;
 
+import com.gmail.merikbest2015.dto.CommonResponse;
+import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.util.AuthUtil;
 import com.twitter.ms.dto.response.AuthResponse;
 import com.twitter.ms.dto.response.UserProfileResponse;
 import com.twitter.ms.service.AuthService;
@@ -8,10 +12,14 @@ import com.twitter.ms.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.gmail.merikbest2015.constants.PathConstants.*;
 
@@ -29,6 +37,11 @@ public class UserController {
         return ResponseEntity.ok(true);
     }
 
+    @GetMapping(TOKEN)
+    public ResponseEntity<AuthResponse> getUserByToken() {
+        String authUserId = String.valueOf(AuthUtil.getAuthenticatedUserId());
+        return ResponseEntity.ok(authService.getUserByToken(authUserId));
+    }
     @GetMapping(USER_ID)
     public ResponseEntity<UserProfileResponse> getUserByUserId (
             @RequestHeader @Valid HttpHeaders headers,
@@ -36,6 +49,13 @@ public class UserController {
         ) {
         UserProfileResponse userProfileResponse = userService.getUserProfileById(userId);
         return new ResponseEntity<>(userProfileResponse, HttpStatus.OK);
+    }
+
+    // Follow user flow
+    @GetMapping(ALL)
+    public ResponseEntity<List<UserResponse>> getUsers(@PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = userService.getUsers(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
 //    @GetMapping("/token")

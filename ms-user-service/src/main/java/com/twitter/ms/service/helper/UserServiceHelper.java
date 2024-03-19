@@ -1,13 +1,18 @@
 package com.twitter.ms.service.helper;
 
+import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.util.AuthUtil;
+import com.twitter.ms.model.User;
 import com.twitter.ms.repository.BlockUserRepository;
 import com.twitter.ms.repository.FollowerUserRepository;
 import com.twitter.ms.repository.MuteUserRepository;
 import com.twitter.ms.repository.UserRepository;
 import com.twitter.ms.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
+import static com.gmail.merikbest2015.constants.ErrorMessage.USER_PROFILE_BLOCKED;
 
 @Component
 @RequiredArgsConstructor
@@ -44,6 +49,12 @@ public class UserServiceHelper {
     public boolean isMyProfileWaitingForApprove(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return userRepository.isMyProfileWaitingForApprove(userId, authUserId);
+    }
+
+    public void checkIsUserBlocked(User user, User authUser) {
+        if (blockUserRepository.isUserBlocked(user.getId(), authUser.getId())) {
+            throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
