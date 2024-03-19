@@ -2,7 +2,9 @@ package com.ms.tweet.repository;
 
 import com.ms.tweet.model.Tweet;
 import com.ms.tweet.repository.projection.ProfileTweetImageProjection;
+import com.ms.tweet.repository.projection.TweetProjection;
 import com.ms.tweet.repository.projection.TweetUserProjection;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +16,21 @@ import java.util.Optional;
 
 @Repository
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
+
+    // TODO: check blocked user if existed in userIds list
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.authorId IN :userIds " +
+            "AND tweet.addressedUsername IS NULL " +
+            "AND tweet.scheduledDate IS NULL " +
+            "AND tweet.deleted = false " +
+            "ORDER BY tweet.dateTime DESC")
+    Page<TweetProjection> getTweetsByAuthorsIds(@Param("userIds") List<Long> userIds, Pageable pageable);
+
+    @Query("SELECT DISTINCT tweet.authorId FROM Tweet tweet " +
+            "WHERE tweet.addressedUsername IS NULL " +
+            "AND tweet.scheduledDate IS NULL " +
+            "AND tweet.deleted = false")
+    List<Long> getTweetAuthorIds();
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
     <T> Optional<T> getTweetById(@Param("tweetId") Long tweetId, Class<T> type);

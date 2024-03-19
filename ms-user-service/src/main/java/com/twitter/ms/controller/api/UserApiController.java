@@ -1,5 +1,6 @@
 package com.twitter.ms.controller.api;
 
+import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.twitter.ms.service.UserApiService;
 import com.twitter.ms.service.UserService;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.gmail.merikbest2015.constants.PathConstants.*;
 
@@ -56,5 +59,10 @@ public class UserApiController {
     @GetMapping(TWEET_AUTHOR_USER_ID)
     public TweetAuthorResponse getTweetAuthor(@PathVariable("userId") Long userId) {
         return userService.getTweetAuthor(userId);
+    }
+
+    @PostMapping(VALID_IDS)
+    public List<Long> getValidUserIds(@RequestBody IdsRequest request) {
+        return userService.getValidUserIds(request);
     }
 }

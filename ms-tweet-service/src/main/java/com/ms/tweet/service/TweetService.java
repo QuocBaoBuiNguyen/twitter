@@ -1,6 +1,7 @@
 package com.ms.tweet.service;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.util.AuthUtil;
@@ -15,6 +16,7 @@ import com.ms.tweet.repository.RetweetRepository;
 import com.ms.tweet.repository.TweetRepository;
 import com.ms.tweet.repository.projection.ProfileTweetImageProjection;
 import com.ms.tweet.repository.projection.RetweetProjection;
+import com.ms.tweet.repository.projection.TweetProjection;
 import com.ms.tweet.repository.projection.TweetUserProjection;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
@@ -55,6 +57,13 @@ public class TweetService {
         }
         Page<TweetUserProjection> tweetsPageable = tweetServiceHelper.getPageableTweetProjectionList(pageable, userTweets, tweets.size() + retweets.size());
         return basicMapper.getHeaderResponse(tweetsPageable, TweetUserResponse.class);
+    }
+
+    @Transactional
+    public HeaderResponse<TweetResponse> getTweets(Pageable pageable) {
+        List<Long> validUserIds = tweetValidationHelper.getValidUserIds();
+        Page<TweetProjection> tweetProjectionPage = tweetRepository.getTweetsByAuthorsIds(validUserIds, pageable);
+        return basicMapper.getHeaderResponse(tweetProjectionPage, TweetResponse.class);
     }
 
     public List<ProfileTweetImageResponse> getUserTweetImages(Long userId) {

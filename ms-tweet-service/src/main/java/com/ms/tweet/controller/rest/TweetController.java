@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.http.WebSocket;
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.IMAGES_USER_ID;
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 import static com.gmail.merikbest2015.constants.WebsocketConstants.TOPIC_FEED_ADD;
 import static com.gmail.merikbest2015.constants.WebsocketConstants.TOPIC_USER_ADD_TWEET;
 
@@ -28,7 +27,7 @@ import static com.gmail.merikbest2015.constants.WebsocketConstants.TOPIC_USER_AD
 public class TweetController {
     private final TweetService tweetService;
     private final WebSocketClient webSocketClient;
-    @GetMapping("/user/{userId}")
+    @GetMapping(USER_USER_ID)
     public ResponseEntity<List<TweetUserResponse>> getUserTweets(
             @PathVariable("userId") Long userId,
             @PageableDefault(size = 10) Pageable pageable) {
@@ -39,6 +38,12 @@ public class TweetController {
     @GetMapping(IMAGES_USER_ID)
     public ResponseEntity<List<ProfileTweetImageResponse>> getUserTweetImages(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(tweetService.getUserTweetImages(userId));
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<TweetResponse>> getTweets(@PageableDefault Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetService.getTweets(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @PostMapping
