@@ -1,5 +1,6 @@
 package com.twitter.ms.service;
 
+import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.util.AuthUtil;
@@ -11,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +56,13 @@ public class UserApiService {
     public void updateTweetCount(boolean increase) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         userRepository.updateTweetCount(increase, authUserId);
+    }
+
+    public List<Long> getValidUserIds(IdsRequest request) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        List<Long> blockedUserIds = userRepository.getUserIdsWhoBlockedMyProfile(request.getIds(), authUserId);
+        request.getIds().removeAll(blockedUserIds);
+        return userRepository.getValidUserIdsByIds(request.getIds(), authUserId);
     }
 
     public TweetAuthorResponse getTweetAuthor(Long userId) {

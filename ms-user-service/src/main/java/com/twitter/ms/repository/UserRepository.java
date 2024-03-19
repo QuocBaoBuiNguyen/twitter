@@ -91,4 +91,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User user SET user.profileStarted = true WHERE user.id = :userId")
     void updateProfileStarted(@Param("userId") Long userId);
+
+    @Query("SELECT user FROM User user " +
+            "LEFT JOIN user.userBlockedList userBlockedList " +
+            "WHERE userBlockedList.id = :authUserId AND user.id IN :userIds")
+    List<Long> getUserIdsWhoBlockedMyProfile(@Param("userIds") List<Long> userIds, @Param("authUserId") Long authUserId);
+
+    @Query("SELECT user.id FROM User user " +
+            "LEFT JOIN user.following following " +
+            "WHERE user.id IN :userIds " +
+            "AND (user.privateProfile = false " +
+            "   OR (user.privateProfile = true AND (following.id = :authUserId OR user.id = :authUserId)) " +
+            "   AND user.active = true)")
+    List<Long> getValidUserIdsByIds(@Param("userIds") List<Long> userIds, @Param("authUserId") Long authUserId);
 }

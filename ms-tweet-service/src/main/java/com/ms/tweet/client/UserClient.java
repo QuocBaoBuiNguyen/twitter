@@ -56,6 +56,10 @@ public interface UserClient {
     @GetMapping(USER_ID_USERNAME)
     Long getUserIdByUsername(@PathVariable("username") String username);
 
+    @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyIdsList")
+    @PostMapping(VALID_IDS)
+    List<Long> getValidUserIds(@RequestBody IdsRequest request);
+
     default Long defaultEmptyPinnedTweetId(Throwable throwable) {
         return 0L;
     }

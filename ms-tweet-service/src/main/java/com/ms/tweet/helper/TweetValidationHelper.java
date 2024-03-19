@@ -1,11 +1,16 @@
 package com.ms.tweet.helper;
 
+import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.util.AuthUtil;
 import com.ms.tweet.client.UserClient;
+import com.ms.tweet.repository.TweetRepository;
+import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 
@@ -13,7 +18,11 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 @RequiredArgsConstructor
 public class TweetValidationHelper {
     private final UserClient userClient;
-
+    private final TweetRepository tweetRepository;
+    public List<Long> getValidUserIds() {
+        List<Long> tweetAuthorIds = tweetRepository.getTweetAuthorIds();
+        return userClient.getValidUserIds(new IdsRequest(tweetAuthorIds));
+    }
     public void validateUserProfile(Long userId) {
         if (!userClient.isUserExists(userId)) {
             throw new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);
