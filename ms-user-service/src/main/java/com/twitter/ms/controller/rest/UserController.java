@@ -1,7 +1,9 @@
 package com.twitter.ms.controller.rest;
 
+import com.gmail.merikbest2015.dto.CommonResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.util.AuthUtil;
 import com.twitter.ms.dto.response.AuthResponse;
 import com.twitter.ms.dto.response.UserProfileResponse;
 import com.twitter.ms.service.AuthService;
@@ -35,6 +37,11 @@ public class UserController {
         return ResponseEntity.ok(true);
     }
 
+    @GetMapping(TOKEN)
+    public ResponseEntity<AuthResponse> getUserByToken() {
+        String authUserId = String.valueOf(AuthUtil.getAuthenticatedUserId());
+        return ResponseEntity.ok(authService.getUserByToken(authUserId));
+    }
     @GetMapping(USER_ID)
     public ResponseEntity<UserProfileResponse> getUserByUserId (
             @RequestHeader @Valid HttpHeaders headers,
