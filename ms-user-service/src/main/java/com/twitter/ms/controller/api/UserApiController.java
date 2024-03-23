@@ -1,6 +1,7 @@
 package com.twitter.ms.controller.api;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.twitter.ms.service.UserApiService;
 import com.twitter.ms.service.UserService;
@@ -59,6 +60,16 @@ public class UserApiController {
     @GetMapping(TWEET_AUTHOR_USER_ID)
     public TweetAuthorResponse getTweetAuthor(@PathVariable("userId") Long userId) {
         return userService.getTweetAuthor(userId);
+    }
+
+    @GetMapping(TWEET_ADDITIONAL_INFO_USER_ID)
+    public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(@PathVariable("userId") Long userId) {
+        return userService.getTweetAdditionalInfoUser(userId);
+    }
+
+    @PutMapping(TWEET_PINNED_TWEET_ID)
+    public void updatePinnedTweetId(@PathVariable("tweetId") Long tweetId) {
+        userService.updatePinnedTweetId(tweetId);
     }
 
     @PostMapping(VALID_IDS)

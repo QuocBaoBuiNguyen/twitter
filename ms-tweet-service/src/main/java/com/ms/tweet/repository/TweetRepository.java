@@ -43,6 +43,11 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.dateTime DESC")
     List<TweetUserProjection> getTweetsByUserId(@Param("userId") Long userId);
 
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.id = :tweetId " +
+            "AND tweet.authorId = :userId")
+    Optional<Tweet> getTweetByUserId(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
+
     @Query("SELECT tweet.id AS tweetId, image.id AS imageId, image.src AS src FROM Tweet tweet " +
             "LEFT JOIN tweet.images image " +
             "WHERE tweet.scheduledDate IS NULL " +

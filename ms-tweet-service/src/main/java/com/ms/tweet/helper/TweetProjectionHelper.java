@@ -1,6 +1,7 @@
 package com.ms.tweet.helper;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
@@ -42,6 +43,11 @@ public class TweetProjectionHelper {
         // all the information of a user like email, phone
         // in this tweet service, we only hold userId. Nothing else
         return userClient.getTweetAuthor(userId);
+    }
+
+    public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId) {
+        TweetAdditionalInfoUserResponse tweetAdditionalInfoUserResponse = userClient.getTweetAdditionalInfoUser(userId);
+        return tweetAdditionalInfoUserResponse;
     }
 
     public TweetListResponse getTweetList(Long listId) {

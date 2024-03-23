@@ -2,6 +2,7 @@ package com.ms.tweet.client;
 
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -59,6 +60,14 @@ public interface UserClient {
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyIdsList")
     @PostMapping(VALID_IDS)
     List<Long> getValidUserIds(@RequestBody IdsRequest request);
+
+    @CircuitBreaker(name = USER_SERVICE)
+    @GetMapping(TWEET_ADDITIONAL_INFO_USER_ID)
+    TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(@PathVariable("userId") Long userId);
+
+    @CircuitBreaker(name = USER_SERVICE)
+    @PutMapping(TWEET_PINNED_TWEET_ID)
+    void updatePinnedTweetId(@PathVariable("tweetId") Long tweetId);
 
     default Long defaultEmptyPinnedTweetId(Throwable throwable) {
         return 0L;

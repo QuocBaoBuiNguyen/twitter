@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.ms.tweet.client.WebSocketClient;
 import com.ms.tweet.dto.request.TweetRequest;
 import com.ms.tweet.dto.response.ProfileTweetImageResponse;
+import com.ms.tweet.dto.response.TweetAdditionalInfoResponse;
 import com.ms.tweet.dto.response.TweetUserResponse;
 import com.ms.tweet.service.TweetService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,12 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
+    @GetMapping(TWEET_ID_INFO)
+    public ResponseEntity<TweetAdditionalInfoResponse> getTweetAdditionalInfoById(
+            @PathVariable("tweetId") Long tweetId) {
+        return ResponseEntity.ok(tweetService.getTweetAdditionalInfoById(tweetId));
+    }
+
     @GetMapping(IMAGES_USER_ID)
     public ResponseEntity<List<ProfileTweetImageResponse>> getUserTweetImages(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(tweetService.getUserTweetImages(userId));
@@ -52,5 +59,10 @@ public class TweetController {
         webSocketClient.send(TOPIC_FEED_ADD, tweet);
         webSocketClient.send(TOPIC_USER_ADD_TWEET + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
+    }
+
+    @DeleteMapping(TWEET_ID)
+    public ResponseEntity<String> deleteTweet(@PathVariable("tweetId") Long tweetId) {
+        return ResponseEntity.ok(tweetService.deleteTweet(tweetId));
     }
 }

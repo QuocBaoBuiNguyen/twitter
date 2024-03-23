@@ -104,4 +104,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "   OR (user.privateProfile = true AND (following.id = :authUserId OR user.id = :authUserId)) " +
             "   AND user.active = true)")
     List<Long> getValidUserIdsByIds(@Param("userIds") List<Long> userIds, @Param("authUserId") Long authUserId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.pinnedTweetId = :tweetId WHERE user.id = :userId")
+    void updatePinnedTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
 }
