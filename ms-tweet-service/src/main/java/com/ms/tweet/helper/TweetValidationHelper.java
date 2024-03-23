@@ -23,6 +23,12 @@ public class TweetValidationHelper {
         List<Long> tweetAuthorIds = tweetRepository.getTweetAuthorIds();
         return userClient.getValidUserIds(new IdsRequest(tweetAuthorIds));
     }
+    public void validateTweet(boolean isDeleted, Long tweetAuthorId) {
+        if (isDeleted) {
+            throw new ApiRequestException(TWEET_DELETED, HttpStatus.BAD_REQUEST);
+        }
+        checkIsValidUserProfile(tweetAuthorId);
+    }
     public void validateUserProfile(Long userId) {
         if (!userClient.isUserExists(userId)) {
             throw new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);

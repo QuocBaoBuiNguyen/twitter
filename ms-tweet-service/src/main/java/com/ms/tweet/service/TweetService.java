@@ -3,21 +3,21 @@ package com.ms.tweet.service;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.util.AuthUtil;
+import com.ms.tweet.client.TagClient;
 import com.ms.tweet.client.UserClient;
 import com.ms.tweet.dto.request.TweetRequest;
 import com.ms.tweet.dto.response.ProfileTweetImageResponse;
+import com.ms.tweet.dto.response.TweetAdditionalInfoResponse;
 import com.ms.tweet.dto.response.TweetUserResponse;
 import com.ms.tweet.helper.TweetServiceHelper;
 import com.ms.tweet.helper.TweetValidationHelper;
 import com.ms.tweet.model.Tweet;
 import com.ms.tweet.repository.RetweetRepository;
 import com.ms.tweet.repository.TweetRepository;
-import com.ms.tweet.repository.projection.ProfileTweetImageProjection;
-import com.ms.tweet.repository.projection.RetweetProjection;
-import com.ms.tweet.repository.projection.TweetProjection;
-import com.ms.tweet.repository.projection.TweetUserProjection;
+import com.ms.tweet.repository.projection.*;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
@@ -29,10 +29,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class TweetService {
     private final UserClient userClient;
+    private final TagClient tagClient;
     private final TweetRepository tweetRepository;
     private final RetweetRepository retweetRepository;
     private final TweetServiceHelper tweetServiceHelper;
@@ -66,6 +69,13 @@ public class TweetService {
         return basicMapper.getHeaderResponse(tweetProjectionPage, TweetResponse.class);
     }
 
+    public TweetAdditionalInfoResponse getTweetAdditionalInfoById(Long tweetId) {
+        TweetAdditionalInfoProjection tweetAdditionalInfoProjection = tweetRepository
+                .getTweetById(tweetId, TweetAdditionalInfoProjection.class)
+                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
+        tweetValidationHelper.validateTweet(tweetAdditionalInfoProjection.isDeleted(), tweetAdditionalInfoProjection.getAuthorId());
+        return basicMapper.convertToResponse(tweetAdditionalInfoProjection, TweetAdditionalInfoResponse.class);
+    }
     public List<ProfileTweetImageResponse> getUserTweetImages(Long userId) {
         tweetValidationHelper.validateUserProfile(userId);
         List<ProfileTweetImageProjection> profileTweetImageProjections = tweetRepository.getUserTweetImages(userId, PageRequest.of(0, 6));
@@ -76,5 +86,17 @@ public class TweetService {
     public TweetResponse createTweet(TweetRequest tweetRequest) {
         Tweet tweet = basicMapper.convertToResponse(tweetRequest, Tweet.class);
         return tweetServiceHelper.createTweet(tweet);
+    }
+
+    @Transactional
+    public String deleteTweet(Long tweetId) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        Tweet tweet = tweetRepository.getTweetByUserId(authUserId, tweetId)
+                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.BAD_REQUEST));
+        userClient.updatePinnedTweetId(tweetId);
+//        tagClient.deleteTagsByTweetId(tweetId);
+        // soft delete
+        tweet.setDeleted(true);
+        return "Your Tweet has been deleted successfully";
     }
 }
