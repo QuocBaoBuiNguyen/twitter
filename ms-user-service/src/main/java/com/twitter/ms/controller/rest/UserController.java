@@ -4,7 +4,9 @@ import com.gmail.merikbest2015.dto.CommonResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.util.AuthUtil;
+import com.twitter.ms.dto.request.UserRequest;
 import com.twitter.ms.dto.response.AuthResponse;
+import com.twitter.ms.dto.response.AuthUserResponse;
 import com.twitter.ms.dto.response.UserProfileResponse;
 import com.twitter.ms.service.AuthService;
 import com.twitter.ms.service.UserService;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -56,6 +59,16 @@ public class UserController {
     public ResponseEntity<List<UserResponse>> getUsers(@PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = userService.getUsers(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @PostMapping(UPLOAD)
+    public ResponseEntity<String> uploadImageUserProfile(@RequestPart("file") MultipartFile multipartFile) {
+        return ResponseEntity.ok(userService.uploadImageUserProfile(multipartFile));
+    }
+    
+    @PutMapping
+    public ResponseEntity<AuthUserResponse> updateUserProfile(@Valid @RequestBody UserRequest userRequest) {
+        return ResponseEntity.ok(userService.updateUserProfile(userRequest));
     }
 
 //    @GetMapping("/token")
