@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.twitter.ms.model.User;
 import com.twitter.ms.repository.projection.UserProfileView;
 import com.twitter.ms.repository.projection.UserProjection;
+import jakarta.ws.rs.QueryParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,6 +23,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     <T> Optional<T> getUserById(Long userId, Class<T> projections);
 
     <T> Optional<T> getUserByEmail(String email, Class<T> projections);
+
+    @Query("SELECT user FROM User user " +
+            "WHERE (UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true) " +
+            "OR (UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true)")
+    <T> Page<T> getUserByUsername(@QueryParam("username") String username, Pageable pageable, Class<T> projections);
 
     Optional<UserProfileView> getUserProfileById(Long id);
 
