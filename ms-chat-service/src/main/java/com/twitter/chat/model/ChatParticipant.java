@@ -18,7 +18,7 @@ import lombok.*;
 public class ChatParticipant {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chats_participants_seq")
-    @SequenceGenerator(name = "chats_participants_seq", sequenceName = "chats_participants_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "chats_participants_seq", sequenceName = "chats_participants_seq", initialValue = 10, allocationSize = 1)
     private Long id;
 
     @Column(name = "left_chat")
