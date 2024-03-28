@@ -1,4 +1,4 @@
-package dto.response;
+package com.twitter.chat.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
