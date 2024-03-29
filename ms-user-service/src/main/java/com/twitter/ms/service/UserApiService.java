@@ -1,6 +1,7 @@
 package com.twitter.ms.service;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
@@ -8,6 +9,7 @@ import com.gmail.merikbest2015.util.AuthUtil;
 import com.twitter.ms.repository.BlockUserRepository;
 import com.twitter.ms.repository.FollowerUserRepository;
 import com.twitter.ms.repository.UserRepository;
+import com.twitter.ms.repository.projection.ChatUserParticipantProjection;
 import com.twitter.ms.repository.projection.TweetAdditionalInfoUserProjection;
 import com.twitter.ms.repository.projection.TweetAuthorProjection;
 import jakarta.servlet.http.HttpServletRequest;
@@ -90,5 +92,10 @@ public class UserApiService {
         if (!ObjectUtils.isEmpty(pinnedTweetId) && pinnedTweetId.equals(tweetId)) {
             userRepository.updatePinnedTweetId(null, userId);
         }
+    }
+
+    public ChatUserParticipantResponse getChatUserParticipant(Long userId) {
+        ChatUserParticipantProjection chatUserParticipantProjection = userRepository.getUserById(userId, ChatUserParticipantProjection.class).get();
+        return basicMapper.convertToResponse(chatUserParticipantProjection, ChatUserParticipantResponse.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.twitter.ms.controller.api;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.twitter.ms.service.UserApiService;
@@ -75,5 +76,10 @@ public class UserApiController {
     @PostMapping(VALID_IDS)
     public List<Long> getValidUserIds(@RequestBody IdsRequest request) {
         return userService.getValidUserIds(request);
+    }
+
+    @GetMapping(CHAT_PARTICIPANT_USER_ID)
+    public ChatUserParticipantResponse getChatUserParticipant(@PathVariable("userId") Long userId) {
+        return userService.getChatUserParticipant(userId);
     }
 }

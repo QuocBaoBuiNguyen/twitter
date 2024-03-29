@@ -1,6 +1,8 @@
 package com.twitter.ms.repository;
 
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.twitter.ms.model.User;
+import com.twitter.ms.repository.projection.ChatUserParticipantProjection;
 import com.twitter.ms.repository.projection.UserProfileView;
 import com.twitter.ms.repository.projection.UserProjection;
 import org.springframework.data.domain.Page;
@@ -112,4 +114,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User user SET user.pinnedTweetId = :tweetId WHERE user.id = :userId")
     void updatePinnedTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
+
 }
