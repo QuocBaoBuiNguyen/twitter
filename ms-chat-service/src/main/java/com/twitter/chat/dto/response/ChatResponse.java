@@ -1,12 +1,19 @@
 package com.twitter.chat.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ChatResponse {
     private Long id;
     private LocalDateTime creationDate;

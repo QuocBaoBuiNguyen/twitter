@@ -37,7 +37,7 @@ public class ChatService {
             chatParticipantRepository.save(chatParticipant1);
             chatParticipantRepository.save(chatParticipant2);
 
-            chat.setChatParticipants(List.of(chatParticipant1, chatParticipant2));
+            chat.setParticipants(List.of(chatParticipant1, chatParticipant2));
 
             ChatProjection chatProjection = chatRepository.getChatById(chat.getId());
             return basicMapper.convertToResponse(chatProjection, ChatResponse.class);

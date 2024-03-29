@@ -17,8 +17,8 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     ChatProjection getChatById(@Param("chatId") Long chatId);
 
     @Query("SELECT chat FROM Chat chat " +
-            "LEFT JOIN chat.chatParticipants cp1 " +
-            "LEFT JOIN chat.chatParticipants cp2 " +
+            "LEFT JOIN chat.participants cp1 " +
+            "LEFT JOIN chat.participants cp2 " +
             " WHERE cp1.userId = :authUserId AND cp2.userId = :userId AND cp1.id = cp2.id")
     public Optional<Chat> getChatByParticipants(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 }

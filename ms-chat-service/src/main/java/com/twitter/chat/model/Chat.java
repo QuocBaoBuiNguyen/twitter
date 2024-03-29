@@ -23,8 +23,8 @@ public class Chat {
     private LocalDateTime creationDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "chat")
-    private List<ChatParticipant> chatParticipants = new ArrayList<>();
+    private List<ChatParticipant> participants = new ArrayList<>();
 
     @OneToMany(mappedBy = "chat")
-    private List<ChatMessage> chatMessages = new ArrayList<>();
+    private List<ChatMessage> messages = new ArrayList<>();
 }
