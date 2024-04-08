@@ -3,6 +3,7 @@ package com.twitter.chat.controller.rest;
 import com.twitter.chat.service.ChatService;
 import com.twitter.chat.dto.response.ChatResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -16,6 +16,12 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
             "WHERE chat.id = :chatId")
     ChatProjection getChatById(@Param("chatId") Long chatId);
 
+    @Query("SELECT CASE WHEN count(chat) > 0 THEN true ELSE false END " +
+            "FROM Chat chat " +
+            "JOIN chat.participants chatParticipant " +
+            "WHERE chat.id = :chatId AND chatParticipant.userId = :userId")
+    boolean isChatExists(@Param("userId") Long userId, @Param("chatId") Long chatId);
+
     @Query("SELECT chat FROM Chat chat " +
             "LEFT JOIN chat.participants cp1 " +
             "LEFT JOIN chat.participants cp2 " +

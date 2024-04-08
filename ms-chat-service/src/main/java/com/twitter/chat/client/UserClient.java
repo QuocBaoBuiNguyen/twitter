@@ -2,6 +2,7 @@ package com.twitter.chat.client;
 
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,5 +16,9 @@ public interface UserClient {
 
     @CircuitBreaker(name = USER_SERVICE)
     @GetMapping(CHAT_PARTICIPANT_USER_ID)
-    public ChatUserParticipantResponse getChatParticipant(@PathVariable("userId") Long userId);
+    ChatUserParticipantResponse getChatParticipant(@PathVariable("userId") Long userId);
+
+    @CircuitBreaker(name = USER_SERVICE)
+    @GetMapping(USER_ID)
+    UserResponse getUserResponseById(@PathVariable("userId") Long userId);
 }
