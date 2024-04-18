@@ -12,7 +12,7 @@ spring:
       globalcors:
         corsConfigurations:
           '[/ui/v1/**]':
-            allowedOrigins: "http://localhost:3000"
+            allowedOrigins: "https://frontend-twitter.onrender.com"
             exposedHeaders: "page-total-count"
             allowedHeaders: "*"
             allowedMethods:
