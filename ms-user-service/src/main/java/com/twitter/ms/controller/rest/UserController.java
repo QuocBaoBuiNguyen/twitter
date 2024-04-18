@@ -8,6 +8,7 @@ import com.twitter.ms.dto.request.UserRequest;
 import com.twitter.ms.dto.response.AuthResponse;
 import com.twitter.ms.dto.response.AuthUserResponse;
 import com.twitter.ms.dto.response.UserProfileResponse;
+import com.twitter.ms.model.User;
 import com.twitter.ms.service.AuthService;
 import com.twitter.ms.service.UserService;
 import com.twitter.ms.utils.Utils;
@@ -69,6 +70,14 @@ public class UserController {
     @PutMapping
     public ResponseEntity<AuthUserResponse> updateUserProfile(@Valid @RequestBody UserRequest userRequest) {
         return ResponseEntity.ok(userService.updateUserProfile(userRequest));
+    }
+
+    @GetMapping(SEARCH_USERNAME)
+    public ResponseEntity<List<UserResponse>> searchUsersByUsername(
+            @PathVariable("username") String username,
+            @PageableDefault(size = 15) Pageable pageable) {
+        List<UserResponse> userResponses = userService.searchUsersByUsername(username, pageable);
+        return ResponseEntity.ok(userResponses);
     }
 
 //    @GetMapping("/token")

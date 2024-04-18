@@ -1,7 +1,8 @@
 package com.twitter.ms.repository;
 
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.twitter.ms.model.User;
+import com.twitter.ms.repository.projection.ChatUserParticipantProjection;
 import com.twitter.ms.repository.projection.UserProfileView;
 import com.twitter.ms.repository.projection.UserProjection;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     <T> Optional<T> getUserById(Long userId, Class<T> projections);
 
     <T> Optional<T> getUserByEmail(String email, Class<T> projections);
+
+    @Query("SELECT user FROM User user " +
+            "WHERE (UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true) " +
+            "OR (UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true)")
+    <T> Page<T> getUserByUsername(@Param("username") String username, Pageable pageable, Class<T> projections);
 
     Optional<UserProfileView> getUserProfileById(Long id);
 
@@ -108,4 +114,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User user SET user.pinnedTweetId = :tweetId WHERE user.id = :userId")
     void updatePinnedTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
+
 }

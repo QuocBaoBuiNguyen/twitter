@@ -1,8 +1,10 @@
 package com.twitter.ms.controller.api;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.twitter.ms.service.UserApiService;
 import com.twitter.ms.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import static com.gmail.merikbest2015.constants.PathConstants.*;
 @RequiredArgsConstructor
 public class UserApiController {
     private final UserApiService userService;
+
     @GetMapping(IS_EXISTS_USER_ID)
     public Boolean isUserExist(@PathVariable(name = "userId") Long userId) {
         return userService.isUserExists(userId);
@@ -27,7 +30,7 @@ public class UserApiController {
 
     @GetMapping(IS_PRIVATE_USER_ID)
     public Boolean isUserHavePrivateProfile(@PathVariable(name = "userId") Long userId,
-                                    HttpServletRequest request) {
+                                            HttpServletRequest request) {
         return userService.isUserHavePrivateProfile(userId, request);
     }
 
@@ -75,5 +78,15 @@ public class UserApiController {
     @PostMapping(VALID_IDS)
     public List<Long> getValidUserIds(@RequestBody IdsRequest request) {
         return userService.getValidUserIds(request);
+    }
+
+    @GetMapping(CHAT_PARTICIPANT_USER_ID)
+    public ChatUserParticipantResponse getChatUserParticipant(@PathVariable("userId") Long userId) {
+        return userService.getChatUserParticipant(userId);
+    }
+
+    @GetMapping(USER_ID)
+    public UserResponse getUserById(@PathVariable("userId") Long userId) {
+        return userService.getUserResponseById(userId);
     }
 }

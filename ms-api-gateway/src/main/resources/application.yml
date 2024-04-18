@@ -54,13 +54,21 @@ spring:
               - name: AuthFilter
               - RewritePath=/ui/v1/tweets(?<segment>/?.*), /ms-tweet-service/ui/v1/tweets$\{segment}
 
-        - id: ms-image-service
-          uri: lb://ms-image-service
-          predicates:
-            - Path=/api/v1/image/**
-          filters:
-            - name: AuthFilter
-            - RewritePath=/api/v1/image(?<segment>/?.*), /ms-image-service/api/v1/image$\{segment}
+        -   id: ms-image-service
+            uri: lb://ms-image-service
+            predicates:
+              - Path=/api/v1/image/**
+            filters:
+              - name: AuthFilter
+              - RewritePath=/api/v1/image(?<segment>/?.*), /ms-image-service/api/v1/image$\{segment}
+
+        -   id: ms-chat-service
+            uri: lb://ms-chat-service
+            predicates:
+              - Path=/ui/v1/chat/**
+            filters:
+              - name: AuthFilter
+              - RewritePath=/ui/v1/chat(?<segment>/?.*), /ms-chat-service/ui/v1/chat$\{segment}
 
         -   id: ms-email-service
             uri: lb://ms-email-service

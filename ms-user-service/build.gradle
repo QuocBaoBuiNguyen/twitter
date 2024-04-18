@@ -54,6 +54,8 @@ dependencies {
 
 	implementation 'org.springframework.security:spring-security-crypto:6.2.1'
 
+	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.1'
+
 	implementation 'com.fasterxml.jackson.core:jackson-annotations'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 	implementation 'com.fasterxml.jackson.core:jackson-core'

@@ -88,4 +88,9 @@ public class UserService {
         AuthUserProjection authUserProjection = userRepository.getUserById(userId, AuthUserProjection.class).get();
         return basicMapper.convertToResponse(authUserProjection, AuthUserResponse.class);
     }
+
+    public List<UserResponse> searchUsersByUsername(String username, Pageable pageable) {
+        Page<UserProjection> userProjectionPage = userRepository.getUserByUsername(username, pageable, UserProjection.class);
+        return basicMapper.convertToResponseList(userProjectionPage.getContent(), UserResponse.class);
+    }
 }

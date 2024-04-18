@@ -1,22 +1,30 @@
 package com.twitter.ms.service;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.util.AuthUtil;
 import com.twitter.ms.repository.BlockUserRepository;
 import com.twitter.ms.repository.FollowerUserRepository;
 import com.twitter.ms.repository.UserRepository;
+import com.twitter.ms.repository.projection.ChatUserParticipantProjection;
 import com.twitter.ms.repository.projection.TweetAdditionalInfoUserProjection;
 import com.twitter.ms.repository.projection.TweetAuthorProjection;
+import com.twitter.ms.repository.projection.UserProjection;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+
+import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_PARTICIPANT_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -90,5 +98,16 @@ public class UserApiService {
         if (!ObjectUtils.isEmpty(pinnedTweetId) && pinnedTweetId.equals(tweetId)) {
             userRepository.updatePinnedTweetId(null, userId);
         }
+    }
+
+    public ChatUserParticipantResponse getChatUserParticipant(Long userId) {
+        ChatUserParticipantProjection chatUserParticipantProjection = userRepository.getUserById(userId, ChatUserParticipantProjection.class).get();
+        return basicMapper.convertToResponse(chatUserParticipantProjection, ChatUserParticipantResponse.class);
+    }
+
+    public UserResponse getUserResponseById(Long userId) {
+        UserProjection userProjection = userRepository.getUserById(userId, UserProjection.class)
+                .orElseThrow(() -> new ApiRequestException(CHAT_PARTICIPANT_NOT_FOUND, HttpStatus.NOT_FOUND));
+        return basicMapper.convertToResponse(userProjection, UserResponse.class);
     }
 }
