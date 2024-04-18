@@ -4,15 +4,15 @@ FROM openjdk:11-jdk as builder
 WORKDIR /app
 
 # Copy Gradle executable and configuration files from ms-eureka-server
-COPY ms-eureka-server/gradle /app/gradle
-COPY ms-eureka-server/build.gradle /app/
+COPY gradle /app/gradle
+COPY build.gradle /app/
 
 # Copy common libraries
-COPY lib /app/lib
+COPY ../lib /app/lib
 
 # Copy source and resource files from ms-eureka-server
-COPY ms-eureka-server/src /app/src
-COPY ms-eureka-server/resources /app/resources
+COPY src /app/src
+COPY resources /app/resources
 
 # Build the application
 RUN ./gradlew clean build
