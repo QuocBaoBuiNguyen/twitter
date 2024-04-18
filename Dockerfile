@@ -22,7 +22,7 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 
 # Copy the built JAR file from the builder stage
-COPY --from=builder /app/build/libs/*.jar app.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 
 # Command to run the application
 CMD ["java", "-jar", "app.jar"]
