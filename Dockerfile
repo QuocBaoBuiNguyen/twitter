@@ -9,6 +9,7 @@ COPY ms-api-gateway/build.gradle /app/
 
 # Copy common libraries
 COPY lib /app/lib
+COPY settings.gradle /app/
 
 # Copy source and resource files from ms-api-gateway
 COPY ms-api-gateway/src /app/src
