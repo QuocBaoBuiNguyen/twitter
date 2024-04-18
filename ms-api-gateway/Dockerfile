@@ -12,7 +12,6 @@ COPY lib /app/lib
 
 # Copy source and resource files from ms-api-gateway
 COPY ms-api-gateway/src /app/src
-COPY ms-api-gateway/resources /app/resources
 
 # Build the application
 RUN ./gradlew clean build
