@@ -21,4 +21,12 @@ public interface UserClient {
     @CircuitBreaker(name = USER_SERVICE)
     @GetMapping(USER_ID)
     UserResponse getUserResponseById(@PathVariable("userId") Long userId);
+
+    @CircuitBreaker(name = USER_SERVICE)
+    @GetMapping(IS_USER_BLOCKED_USER_ID)
+    Boolean isUserBlockedByMyProfile(@PathVariable("userId") Long userId);
+
+    @CircuitBreaker(name = USER_SERVICE)
+    @GetMapping(IS_MY_PROFILE_BLOCKED_USER_ID)
+    Boolean isMyProfileBlockedByUser(@PathVariable("userId") Long userId);
 }
