@@ -91,11 +91,11 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://ms-eureka-server-syh2.onrender.com/eureka
+      defaultZone: https://ms-eureka-server-syh2.onrender.com/eureka
     fetch-registry: true
     register-with-eureka: true
-  instance:
-    hostname: ms-eureka-server-syh2.onrender.com
+#  instance:
+#    hostname: ms-eureka-server-syh2.onrender.com
 
 jwt:
   secret: 208bc47b3e1ee5554e388c735b9f234f89ac246e8ce463c8313fc1cff16e760e
