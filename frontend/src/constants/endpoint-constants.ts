@@ -1,4 +1,4 @@
-export const HOST = "http://localhost:8000";
+export const HOST = process.env.REACT_APP_API_GATEWAY_URL;
 export const API_ENDPOINT = HOST + "/ui/v1";
 export const WS_URL = HOST + "/websocket";
 
