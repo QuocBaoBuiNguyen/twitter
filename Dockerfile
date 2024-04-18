@@ -1,12 +1,9 @@
-## EUREKA-SERVER
-
 # Build stage with OpenJDK 11 and Gradle
-FROM openjdk:11-jdk as builder
+FROM gradle:7.1.0-jdk11 as build
 
 WORKDIR /app
 
 # Copy Gradle executable and configuration files from ms-eureka-server
-COPY ms-eureka-server/gradlew ms-eureka-server/gradlew.bat ./gradle/
 COPY ms-eureka-server/gradle /app/gradle
 COPY ms-eureka-server/build.gradle /app/
 
@@ -17,7 +14,7 @@ COPY lib /app/lib
 COPY ms-eureka-server/src /app/src
 
 # Build the application
-RUN gradle clean build
+RUN gradle clean build --no-daemon
 
 # Run stage with OpenJDK 11 JRE slim
 FROM openjdk:11-jre-slim
