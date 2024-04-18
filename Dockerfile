@@ -1,5 +1,5 @@
 # Build stage with OpenJDK 11 and Gradle
-FROM gradle:7.1.0-jdk11 as build
+FROM gradle:8.1.0-jdk17-alpine as build
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ COPY ms-eureka-server/src /app/src
 RUN gradle clean build --no-daemon
 
 # Run stage with OpenJDK 11 JRE slim
-FROM openjdk:11-jre-slim
+FROM openjdk:17.0.1-jdk-slim
 
 WORKDIR /app
 
