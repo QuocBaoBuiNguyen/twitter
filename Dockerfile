@@ -6,6 +6,7 @@ FROM openjdk:11-jdk as builder
 WORKDIR /app
 
 # Copy Gradle executable and configuration files from ms-eureka-server
+COPY ms-eureka-server/gradlew ms-eureka-server/gradlew.bat ./gradle/
 COPY ms-eureka-server/gradle /app/gradle
 COPY ms-eureka-server/build.gradle /app/
 
