@@ -12,7 +12,6 @@ COPY ../lib /app/lib
 
 # Copy source and resource files from ms-eureka-server
 COPY src /app/src
-COPY resources /app/resources
 
 # Build the application
 RUN ./gradlew clean build
