@@ -17,7 +17,7 @@ COPY lib /app/lib
 COPY ms-eureka-server/src /app/src
 
 # Build the application
-RUN ./gradlew clean build
+RUN gradle clean build
 
 # Run stage with OpenJDK 11 JRE slim
 FROM openjdk:11-jre-slim
