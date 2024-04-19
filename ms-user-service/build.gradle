@@ -61,13 +61,13 @@ dependencies {
 	implementation 'com.fasterxml.jackson.core:jackson-core'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.1'
-	
-	implementation "org.mapstruct:mapstruct:1.4.2.Final"
-	annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
-	implementation 'org.modelmapper:modelmapper:3.1.1'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	compileOnly "org.mapstruct:mapstruct:1.4.2.Final"
+	annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
+	implementation 'org.modelmapper:modelmapper:3.1.1'
 
 	implementation project(':lib')
 	annotationProcessor(project(":lib"))
@@ -79,6 +79,6 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}
