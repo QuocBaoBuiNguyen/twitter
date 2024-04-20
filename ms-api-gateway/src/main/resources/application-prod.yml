@@ -9,7 +9,10 @@ spring:
     compatibility-verifier:
       enabled: false
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
+        add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/ui/v1/**]':
             allowedOrigins: "https://frontend-twitter.onrender.com"
