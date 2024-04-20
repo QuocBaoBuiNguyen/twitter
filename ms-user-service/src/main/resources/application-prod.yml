@@ -47,6 +47,13 @@ jwt:
   secret: 208bc47b3e1ee5554e388c735b9f234f89ac246e8ce463c8313fc1cff16e760e
 
 eureka:
+  instance:
+    hostname: ms-user-service.onrender.com  # Public domain name
+    nonSecurePort: 443  # Standard HTTPS port
+    securePortEnabled: true  # Enable if you're using HTTPS
+    preferIpAddress: false  # Use the hostname instead of the IP address
+    statusPageUrlPath: /actuator/info  # Default status page path
+    healthCheckUrlPath: /actuator/health  # Default health check path
   client:
     serviceUrl:
       defaultZone: https://ms-eureka-server-syh2.onrender.com/eureka
