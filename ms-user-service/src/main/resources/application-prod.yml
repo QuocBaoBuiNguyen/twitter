@@ -28,7 +28,7 @@ spring:
     password: bWuOk2kJRpU0EtjUAPRoMhx3UU2ZF7uh
     driverClassName: org.postgresql.Driver
   rabbitmq:
-    host: https://rabbitmq-xldo.onrender.com
+    host: rabbitmq-xldo.onrender.com
     username: rabbitmq
     password: rabbitmq
   data:
