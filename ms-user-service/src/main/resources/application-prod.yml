@@ -27,6 +27,10 @@ spring:
     username: twitter_fnvb_user
     password: bWuOk2kJRpU0EtjUAPRoMhx3UU2ZF7uh
     driverClassName: org.postgresql.Driver
+  rabbitmq:
+    host: https://rabbitmq-xldo.onrender.com
+    username: rabbitmq
+    password: rabbitmq
   data:
     redis:
 #      url: rediss://red-coh99qev3ddc73fkf190:ZFBBFUT5GfKDJHH0T5Zo8A1VVny8skwL@singapore-redis.render.com:6379
