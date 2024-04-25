@@ -5,10 +5,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: 'httptrace'
+        include: '*'
 logging:
   level:
-    org.springframework.web.filter.CommonsRequestLoggin: DEBUG
+    org.springframework.web.filter.CommonsRequestLogging: DEBUG
+    org.springframework.web.HttpLogging: TRACE
+    reactor.netty.http.server: DEBUG
+    reactor.netty.http.client: DEBUG
 server:
   port : 8081
   forward-headers-strategy: framework
