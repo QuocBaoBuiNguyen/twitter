@@ -1,8 +1,14 @@
 management:
+  trace:
+    enabled: true
+    include: AUTHORIZATION_HEADER, COOKIE_HEADERS, PRINCIPAL, REMOTE_ADDRESS, REQUEST_HEADERS, RESPONSE_HEADERS, SESSION_ID, TIME_TAKEN
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: 'httptrace'
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggin: DEBUG
 server:
   port : 8081
   forward-headers-strategy: framework
