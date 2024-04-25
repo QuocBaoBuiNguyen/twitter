@@ -1,5 +1,13 @@
 server:
   port : 8000
+logging:
+  level:
+    reactor:
+      netty: INFO
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
 spring:
   application:
     name: ms-api-gateway
@@ -9,6 +17,10 @@ spring:
     compatibility-verifier:
       enabled: false
     gateway:
+      httpclient:
+        wiretap: true
+      httpserver:
+        wiretap: true
       globalcors:
         corsConfigurations:
           '[/ui/v1/**]':
