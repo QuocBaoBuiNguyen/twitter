@@ -4,6 +4,9 @@ logging:
   level:
     reactor:
       netty: INFO
+    org.springframework.web.HttpLogging: TRACE
+    reactor.netty.http.server: DEBUG
+    reactor.netty.http.client: DEBUG
     org:
       springframework:
         cloud:
