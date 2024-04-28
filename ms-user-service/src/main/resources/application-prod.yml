@@ -63,8 +63,8 @@ jwt:
 eureka:
   instance:
     hostname: ms-user-service.onrender.com  # Public domain name
-    nonSecurePort: 80  # Standard HTTP port
-    securePortEnabled: false  # Enable if you're using HTTPS
+    nonSecurePort: 443  # Standard HTTP port
+    securePortEnabled: true  # Enable if you're using HTTPS
     preferIpAddress: false  # Use the hostname instead of the IP address
     statusPageUrlPath: /actuator/info  # Default status page path
     healthCheckUrlPath: /actuator/health  # Default health check path
