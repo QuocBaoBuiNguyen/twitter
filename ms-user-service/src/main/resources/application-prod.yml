@@ -13,7 +13,7 @@ logging:
     reactor.netty.http.server: DEBUG
     reactor.netty.http.client: DEBUG
 server:
-  port : 8081
+  port : 8080
   forward-headers-strategy: framework
   servlet:
     context-path: /ms-user-service
