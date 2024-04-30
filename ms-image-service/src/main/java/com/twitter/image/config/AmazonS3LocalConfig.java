@@ -20,7 +20,7 @@ public class AmazonS3LocalConfig {
     private String awsAccessSecret;
 
     @Bean
-//    @Profile({"dev", "local"})
+    @Profile({"dev", "local", "sit"})      
     public AmazonS3 amazonS3() {
         AWSCredentials credentials = new BasicAWSCredentials(awsAccessKey, awsAccessSecret);
         AwsClientBuilder.EndpointConfiguration endpoint =

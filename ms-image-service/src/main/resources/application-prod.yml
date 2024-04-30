@@ -1,0 +1,45 @@
+management:
+    endpoints:
+        web:
+            exposure:
+                include: 'prometheus, health'
+    metrics:
+        export:
+            prometheus:
+                enabled: true
+        distribution:
+            percentiles-histogram:
+                "[http.server.requests]": true
+
+server:
+  port : 8443
+  servlet:
+    context-path: /ms-image-service
+spring:
+  application:
+    name: ms-image-service
+  flyway:
+    enabled: true
+    baseline-on-migrate : true
+
+amazon:
+  s3:
+    bucket:
+     name: twitterclonestorage
+  aws:
+   access-key: AKIATP4TDBGPAJUNI5EY
+   secret-key: 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
+
+eureka:
+  instance:
+    hostname: ms-image-service.onrender.com  # Public domain name
+    nonSecurePort: 443  # Standard HTTP port
+    securePortEnabled: true  # Enable if you're using HTTPS
+    preferIpAddress: false  # Use the hostname instead of the IP address
+    statusPageUrlPath: /actuator/info  # Default status page path
+    healthCheckUrlPath: /actuator/health  # Default health check path
+  client:
+    serviceUrl:
+      defaultZone: https://ms-eureka-server-syh2.onrender.com/eureka
+    fetch-registry: true
+    register-with-eureka: true

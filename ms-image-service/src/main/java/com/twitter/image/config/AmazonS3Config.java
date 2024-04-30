@@ -11,13 +11,13 @@ public class AmazonS3Config {
     @Value("${amazon.aws.secret-key}")
     private String awsAccessSecret;
 
-//    @Bean
-//    @Profile({"sit","prod"})
-//    public AmazonS3 amazonS3() {
-//        AWSCredentials credentials = new BasicAWSCredentials(awsAccessKey, awsAccessSecret);
-//        return AmazonS3ClientBuilder.standard()
-//                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-//                .withRegion(Regions.AP_SOUTHEAST_1)
-//                .build();
-//    }
+   @Bean
+   @Profile({"prod"})
+   public AmazonS3 amazonS3() {
+       AWSCredentials credentials = new BasicAWSCredentials(awsAccessKey, awsAccessSecret);
+       return AmazonS3ClientBuilder.standard()
+               .withCredentials(new AWSStaticCredentialsProvider(credentials))
+               .withRegion(Regions.AP_SOUTHEAST_1)
+               .build();
+   }
 }
