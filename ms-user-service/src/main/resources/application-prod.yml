@@ -37,9 +37,11 @@ spring:
     password: bWuOk2kJRpU0EtjUAPRoMhx3UU2ZF7uh
     driverClassName: org.postgresql.Driver
   rabbitmq:
-    host: rabbitmq-xldo.onrender.com
-    username: rabbitmq
-    password: rabbitmq
+    addresses: amqps://gqupsbui:sNGBVBZF4XIuUNvAnYWfOWJ8mUiUTUAr@armadillo.rmq.cloudamqp.com/gqupsbui
+#    host: armadillo.rmq.cloudamqp.com
+#    port: 5672
+#    username: gqupsbui
+#    password: sNGBVBZF4XIuUNvAnYWfOWJ8mUiUTUAr
   data:
     redis:
 #      url: rediss://red-coh99qev3ddc73fkf190:ZFBBFUT5GfKDJHH0T5Zo8A1VVny8skwL@singapore-redis.render.com:6379
