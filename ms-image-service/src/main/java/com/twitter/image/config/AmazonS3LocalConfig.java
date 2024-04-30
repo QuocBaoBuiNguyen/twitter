@@ -10,6 +10,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class AmazonS3LocalConfig {
@@ -20,7 +21,7 @@ public class AmazonS3LocalConfig {
     private String awsAccessSecret;
 
     @Bean
-    @Profile({"dev", "local", "sit"})      
+    @Profile({"dev", "local", "sit"})
     public AmazonS3 amazonS3() {
         AWSCredentials credentials = new BasicAWSCredentials(awsAccessKey, awsAccessSecret);
         AwsClientBuilder.EndpointConfiguration endpoint =
