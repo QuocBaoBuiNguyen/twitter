@@ -44,7 +44,9 @@ spring:
       globalcors:
         corsConfigurations:
           '[/ui/v1/**]':
-            allowedOrigins: "https://frontend-twitter.onrender.com"
+            allowedOrigins:
+              - "https://frontend-twitter.onrender.com"
+              - "http://localhost:3000"
             exposedHeaders: "page-total-count"
             allowedHeaders: "*"
             allowedMethods:
