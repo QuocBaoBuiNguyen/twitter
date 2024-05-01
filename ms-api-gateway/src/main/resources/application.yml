@@ -85,6 +85,9 @@ spring:
               - RewritePath=/websocket/(?<segment>.*), /ms-websocket-service/websocket/$\{segment}
               - RewritePath=/api/v1/websocket(?<segment>/?.*), /ms-websocket-service/api/v1/websocket$\{segment}
 
+authUser:
+  url:
+
 #  zipkin:
 #    base-url: http://${ZIPKIN_HOST:localhost}:9411
 
