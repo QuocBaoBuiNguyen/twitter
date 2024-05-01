@@ -121,7 +121,7 @@ spring:
 #    base-url: http://${ZIPKIN_HOST:localhost}:9411
 
 authUser:
-  url: https://ms-user-service.onrender.com/ms-user-service/api/v1/auth/user
+  url: https://ms-user-service.onrender.com/ms-user-service/api/v1/auth
 
 eureka:
   instance:
