@@ -62,6 +62,11 @@ rabbitmq:
 jwt:
   secret: 208bc47b3e1ee5554e388c735b9f234f89ac246e8ce463c8313fc1cff16e760e
 
+service:
+  downstream-url:
+    ms-image-service: https://ms-image-service.onrender.com
+    ms-notification-service: https://ms-notification-service.onrender.com
+
 eureka:
   instance:
     hostname: ms-user-service.onrender.com  # Public domain name
