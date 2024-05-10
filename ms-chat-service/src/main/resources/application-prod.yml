@@ -35,6 +35,12 @@ spring:
     password: bWuOk2kJRpU0EtjUAPRoMhx3UU2ZF7uh
     driverClassName: org.postgresql.Driver
 
+service:
+  downstream-url:
+    ms-user-service: https://ms-user-service.onrender.com
+    ms-tweet-service: https://ms-tweet-service.onrender.com
+    ms-websocket-service: https://ms-websocket-service.onrender.com
+
 eureka:
   instance:
     hostname: ms-chat-service.onrender.com  # Public domain name
