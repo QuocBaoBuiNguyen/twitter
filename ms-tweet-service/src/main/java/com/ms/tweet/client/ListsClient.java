@@ -11,7 +11,7 @@ import static com.gmail.merikbest2015.constants.FeignConstants.LISTS_SERVICE;
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_LISTS;
 import static com.gmail.merikbest2015.constants.PathConstants.TWEET_LIST_ID;
 
-@FeignClient(value = LISTS_SERVICE, path = "/" + LISTS_SERVICE + API_V1_LISTS, configuration = FeignConfiguration.class)
+@FeignClient(value = LISTS_SERVICE, url = "${service.downstream-url.ms-list-service}", path = "/" + LISTS_SERVICE + API_V1_LISTS, configuration = FeignConfiguration.class)
 public interface ListsClient {
     @CircuitBreaker(name = LISTS_SERVICE, fallbackMethod = "defaultEmptyTweetList")
     @GetMapping(TWEET_LIST_ID)
