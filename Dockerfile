@@ -1,14 +1,13 @@
-# Use the official MinIO image as the base image
-FROM minio/minio
+# Use the official MinIO image
+FROM minio/minio:latest
 
-# Set the working directory in the container
-WORKDIR /data
+# Set environment variables for MinIO access and secret keys
+# These should ideally be passed from outside using Docker secrets or environment variables at runtime
+ENV MINIO_ROOT_USER=minioadmin
+ENV MINIO_ROOT_PASSWORD=minioadmin
 
-# Copy the local file to the container's workspace
-COPY . .
+# Expose ports for MinIO server and console
+EXPOSE 9000 9090
 
-# Expose port 9000
-EXPOSE 9000
-
-# Command to run the executable
-CMD ["minio", "server", "/data"]
+# Command to start MinIO server with the MinIO console
+CMD ["minio", "server", "/data", "--console-address", ":9090", "--address", ":9000"]
