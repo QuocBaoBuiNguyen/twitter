@@ -12,8 +12,9 @@ logging:
     org.springframework.web.HttpLogging: TRACE
     reactor.netty.http.server: TRACE
     reactor.netty.http.client: TRACE
+
 server:
-  port : 8443
+  port: 8443
   forward-headers-strategy: framework
   servlet:
     context-path: /ms-chat-service
