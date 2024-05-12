@@ -38,6 +38,7 @@ public class AmazonS3Config {
                        EU_CENTRAL_1.getName()))
                .withPathStyleAccessEnabled(true)
                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+               .withRequestHandlers(new ETagS3Interceptor())
                .disableChunkedEncoding()
                .build();
    }
