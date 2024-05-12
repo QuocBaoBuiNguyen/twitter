@@ -1,6 +1,7 @@
 package com.twitter.image.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
+
+import static com.twitter.image.config.AmazonS3Config.listS3Buckets;
 
 @Service
 @Transactional
@@ -30,8 +33,15 @@ public class ImageService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+//            // Set custom object metadata including the content type
+//            ObjectMetadata metadata = new ObjectMetadata();
+//            metadata.setContentType("image/png");  // Set the content type to application/json
+//            metadata.setContentLength(multipartFile.getSize());
+
             String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
+            listS3Buckets(amazonS3client);
             amazonS3client.putObject(new PutObjectRequest(bucketName, fileName, file));
+//                    .withMetadata(metadata));
             image = amazonS3client.getUrl(bucketName, fileName).toString();
             file.delete();
         }
