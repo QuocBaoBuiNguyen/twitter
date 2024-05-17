@@ -12,7 +12,7 @@ import static com.gmail.merikbest2015.constants.FeignConstants.IMAGE_SERVICE;
 import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_IMAGE;
 
-@FeignClient(value = IMAGE_SERVICE, path = "/" + IMAGE_SERVICE + API_V1_IMAGE, configuration = FeignConfiguration.class)
+@FeignClient(value = IMAGE_SERVICE, url = "${service.downstream-url.ms-image-service}", path = "/" + IMAGE_SERVICE + API_V1_IMAGE, configuration = FeignConfiguration.class)
 public interface ImageClient {
 
     @CircuitBreaker(name = IMAGE_SERVICE)

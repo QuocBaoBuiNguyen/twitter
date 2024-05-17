@@ -15,7 +15,7 @@ import java.util.List;
 import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
 import static com.gmail.merikbest2015.constants.PathConstants.*;
 
-@FeignClient(name = USER_SERVICE, path ="/" + USER_SERVICE + API_V1_USER, contextId = "UserClient", configuration = FeignConfiguration.class)
+@FeignClient(name = USER_SERVICE, url = "${service.downstream-url.ms-user-service}", path ="/" + USER_SERVICE + API_V1_USER, contextId = "UserClient", configuration = FeignConfiguration.class)
 public interface UserClient {
     @CircuitBreaker(name = USER_SERVICE)
     @GetMapping(TWEET_AUTHOR_USER_ID)

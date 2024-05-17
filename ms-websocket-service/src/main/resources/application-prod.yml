@@ -1,0 +1,24 @@
+server:
+  port : 8443
+  servlet:
+    context-path: /ms-websocket-service
+
+spring:
+  application:
+    name: ms-websocket-service
+  cloud:
+    compatibility-verifier:
+      enabled: false
+eureka:
+  instance:
+    hostname: ms-websocket-service.onrender.com  # Public domain name
+    nonSecurePort: 443  # Standard HTTP port
+    securePortEnabled: true  # Enable if you're using HTTPS
+    preferIpAddress: false  # Use the hostname instead of the IP address
+    statusPageUrlPath: /actuator/info  # Default status page path
+    healthCheckUrlPath: /actuator/health  # Default health check path
+  client:
+    serviceUrl:
+      defaultZone: https://ms-eureka-server-syh2.onrender.com/eureka
+    fetch-registry: true
+    register-with-eureka: true
