@@ -8,6 +8,7 @@ import com.twitter.gateway.config.ClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,8 @@ public class AuthFilter extends
             LoggerFactory.getLogger(AuthFilter.class);
     private final JwtProvider jwtProvider;
     private final WebClient.Builder webClientBuilder;
+    @Value("${authUser.url}")
+    private String authUserUrl;
     @Autowired
     public AuthFilter(JwtProvider jwtProvider, WebClient.Builder clientBuilder) {
         super(Config.class);
@@ -43,7 +46,7 @@ public class AuthFilter extends
                 String email = jwtProvider.parseToken(token);
 
                 UserPrincipalResponse user = webClientBuilder
-                        .baseUrl(String.format("http://%s:8081/%s", USER_SERVICE, USER_SERVICE + API_V1_AUTH))
+                        .baseUrl(authUserUrl)
                         .build()
                         .get()
                         .uri(USER_EMAIL, email)
