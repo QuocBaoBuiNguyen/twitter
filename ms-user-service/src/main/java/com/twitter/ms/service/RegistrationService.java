@@ -13,6 +13,7 @@ import com.twitter.ms.mapper.UserMapper;
 import com.twitter.ms.model.User;
 import com.twitter.ms.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RegistrationService {
     private final UserRepository userRepository;
     private final AmqpProducer amqpProducer;
@@ -62,6 +64,7 @@ public class RegistrationService {
                 .orElseThrow(() -> new RegistrationException("Email", "Email is already registered", HttpStatus.FORBIDDEN));
         userRepository.updateActivationCode(otpService.generateOtp(user.getEmail()), user.getId());
         String activationCode = userRepository.findActivationCodeByUserId(user.getId());
+        log.info("Ready to send validation code to email={}",user.getEmail());
         EmailRequest emailRequest = EmailRequest.builder()
                 .to(user.getEmail())
                 .subject("Validation code for Twitter registration")
@@ -72,6 +75,7 @@ public class RegistrationService {
                 ))
                 .build();
         amqpProducer.sendEmail(emailRequest);
+        log.info("Email has been sent successfully to rabbit mq");
         return CommonResponse.builder()
                 .httpStatus("200 OK")
                 .message("Send activation code successfully")
