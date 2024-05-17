@@ -13,7 +13,7 @@ import static com.gmail.merikbest2015.constants.FeignConstants.NOTIFICATION_SERV
 import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
 import static com.gmail.merikbest2015.constants.PathConstants.*;
 
-@FeignClient(name = NOTIFICATION_SERVICE, path ="/" + NOTIFICATION_SERVICE + API_V1_USER, contextId = "NotificationClient", configuration = FeignConfiguration.class)
+@FeignClient(name = NOTIFICATION_SERVICE, url = "${service.downstream-url.ms-notification-service}", path ="/" + NOTIFICATION_SERVICE + API_V1_USER, contextId = "NotificationClient", configuration = FeignConfiguration.class)
 public interface NotificationClient {
     @PostMapping(TWEET)
     NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request);
