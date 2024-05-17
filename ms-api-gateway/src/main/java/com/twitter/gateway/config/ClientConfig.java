@@ -12,7 +12,7 @@ import static com.gmail.merikbest2015.constants.PathConstants.API_V1_AUTH;
 
 @Configuration
 public class ClientConfig {
-    @LoadBalanced
+//    @LoadBalanced
     @Bean
     public WebClient.Builder webClientBuilder() {
         return WebClient.builder();
