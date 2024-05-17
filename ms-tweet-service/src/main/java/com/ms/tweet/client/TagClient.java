@@ -11,7 +11,7 @@ import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TAGS;
 import static com.gmail.merikbest2015.constants.PathConstants.DELETE_TWEET_ID;
 
 @CircuitBreaker(name = TAG_SERVICE)
-@FeignClient(value = TAG_SERVICE, path = API_V1_TAGS, configuration = FeignConfiguration.class)
+@FeignClient(value = TAG_SERVICE, url = "${service.downstream-url.ms-tag-service}", path = API_V1_TAGS, configuration = FeignConfiguration.class)
 public interface TagClient {
     @DeleteMapping(DELETE_TWEET_ID)
     void deleteTagsByTweetId(@PathVariable("tweetId") Long tweetId);
