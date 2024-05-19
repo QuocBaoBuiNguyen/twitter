@@ -1,40 +1,38 @@
 # Build stage with OpenJDK 11 and Gradle
 FROM gradle:8.1.0-jdk17-alpine as build
 
-<<<<<<< HEAD
 
 WORKDIR /app
 
 
-# Copy Gradle executable and configuration files from ms-chat-service
-COPY ms-chat-service/gradle /app/gradle
-COPY ms-chat-service/build.gradle /app/
+# Copy Gradle executable and configuration files from ms-email-service
+COPY ms-email-service/gradle /app/gradle
+COPY ms-email-service/build.gradle /app/
 
-=======
-WORKDIR /app
-
-# Copy Gradle executable and configuration files from ms-api-gateway
-COPY ms-api-gateway/gradle /app/gradle
-COPY ms-api-gateway/build.gradle /app/
->>>>>>> 4eb16eb (Revert "Stop tracking Dockerfile")
 
 # Copy common libraries
 COPY lib /app/lib
 COPY settings.gradle /app/
 
-# Copy source and resource files from ms-api-gateway
-COPY ms-api-gateway/src /app/src
+
+# Copy source and resource files from ms-email-service
+COPY ms-email-service/src /app/src
+
 
 # Build the application
 RUN gradle clean build --no-daemon
 
+
 # Run stage with OpenJDK 11 JRE slim
 FROM openjdk:17.0.1-jdk-slim
 
+
 WORKDIR /app
+
 
 # Copy the built JAR file from the builder stage
 COPY --from=build /app/build/libs/*.jar app.jar
+
 
 # Command to run the application
 CMD ["java", "-jar", "-Dspring.profiles.active=prod", "app.jar"]
