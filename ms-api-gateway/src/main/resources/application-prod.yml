@@ -13,6 +13,8 @@ logging:
     reactor:
       netty: INFO
     org.springframework.web.HttpLogging: TRACE
+    org.springframework.web.filter.CorsFilter: DEBUG
+    org.springframework.security: DEBUG
     reactor.netty.http.server: TRACE
     reactor.netty.http.client: TRACE
     logging.level.com.netflix.eureka: TRACE
