@@ -13,7 +13,7 @@ import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TWEETS;
 import static com.gmail.merikbest2015.constants.PathConstants.CHAT_TWEET_ID;
 
 @CircuitBreaker(name = TWEET_SERVICE)
-@FeignClient(name = TWEET_SERVICE, path ="/" + TWEET_SERVICE + API_V1_TWEETS, contextId = "TweetClient", configuration = FeignConfiguration.class)
+@FeignClient(name = TWEET_SERVICE, url = "${service.downstream-url.ms-tweet-service}", path ="/" + TWEET_SERVICE + API_V1_TWEETS, contextId = "TweetClient", configuration = FeignConfiguration.class)
 public interface TweetClient {
     @GetMapping(CHAT_TWEET_ID)
     ChatTweetResponse getChatTweet(@PathVariable("tweetId") Long tweetId);
