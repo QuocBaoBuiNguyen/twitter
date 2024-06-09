@@ -44,6 +44,7 @@ spring:
       httpserver:
         wiretap: true
       globalcors:
+        add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/ui/v1/**]':
             allowedOrigins:

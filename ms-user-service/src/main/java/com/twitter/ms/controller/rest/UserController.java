@@ -68,7 +68,7 @@ public class UserController {
     }
     
     @PutMapping
-    public ResponseEntity<AuthUserResponse> updateUserProfile(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<AuthUserResponse> updateUserProfile(@Valid @RequestBody UserRequest userRequest) {
         return ResponseEntity.ok(userService.updateUserProfile(userRequest));
     }
 
