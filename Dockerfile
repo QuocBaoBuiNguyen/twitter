@@ -1,19 +1,22 @@
 # Build stage with OpenJDK 11 and Gradle
 FROM gradle:8.1.0-jdk17-alpine as build
 
+
 WORKDIR /app
 
-# Copy Gradle executable and configuration files from ms-api-gateway
-COPY ms-api-gateway/gradle /app/gradle
-COPY ms-api-gateway/build.gradle /app/
+
+# Copy Gradle executable and configuration files from ms-user-service
+COPY ms-user-service/gradle /app/gradle
+COPY ms-user-service/build.gradle /app/
+
 
 # Copy common libraries
 COPY lib /app/lib
 COPY settings.gradle /app/
 
 
-# Copy source and resource files from ms-api-gateway
-COPY ms-api-gateway/src /app/src
+# Copy source and resource files from ms-user-service
+COPY ms-user-service/src /app/src
 
 
 # Build the application
